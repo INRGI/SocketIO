@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Messenger</title>
+  <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/4.4.1/socket.io.min.js"></script>
+  <script type="text/javascript" charset="utf-8">
+    var socket = io.connect('http://' + document.domain + ':' + location.port);
+    socket.on('message', function(msg) {
+        var li = document.createElement('li');
+        li.innerHTML = msg;
+        document.getElementById('messages').appendChild(li);
+    });
+    function sendMessage() {
+        var msg = document.getElementById('message').value;
+        socket.send(msg);
+        document.getElementById('message').value = '';
+        return false;
+    }
+  </script>
+</head>
+<body>
+  <ul id="messages"></ul>
+  <form onsubmit="return sendMessage();">
+    <input id="message" type="text" autocomplete="off" required>
+    <button>Відправити повідомлення</button>
+  </form>
+</body>
+</html>
